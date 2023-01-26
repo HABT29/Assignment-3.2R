@@ -55,3 +55,91 @@ ggplot(df, aes(fill = survival, x = sex, y = frequency(sex))) +
 }
 
 cheat("3")
+
+#Q3.2.R.2
+install.packages("RColorBrewer")
+
+
+make_art <- function(seed = 123){
+  library(ggplot2)
+  library(RColorBrewer)
+  library(patchwork)
+  set.seed(seed)
+  x1 <- rnorm(50, 20, 10)
+  y1 <- rnorm(50, 20, 10) 
+  xend1 <- x1 + rnorm(50, 20, 10)
+  yend1 <- y1 + rnorm(50, 20, 10)
+  size1 <- rnorm(10, 5, 10) 
+  color1 <- runif(50)
+  data1 <- data.frame(x1, y1, xend1, yend1, color1, size1)
+  pcol <- c("darkblue", "blue", "lightblue", "purple", "pink")
+  rseq <- seq(1:3)
+  rnum <- sample(rseq, 1)
+  artplot1 <-
+    ggplot(data = data1, aes(
+      x = x1,
+      y = y1,
+      xend = xend1,
+      yend = yend1,
+      size = size1, 
+      colour = color1,
+    )) +
+    geom_segment(show.legend = FALSE) +
+    coord_polar() +
+    scale_y_continuous(expand = c(0, -10)) +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_size(range = c(1, 5)) +
+    scale_color_gradient(low=sample(pcol, size = 1, replace = FALSE),
+                         high=sample(pcol, size = 1, replace = FALSE))+
+    theme_void()
+  artplot2 <-
+    ggplot(data = data1, aes(
+      x = x1,
+      y = y1,
+      xend = xend1,
+      yend = yend1,
+      size = size1, 
+      colour = color1,
+    )) +
+    geom_segment(show.legend = FALSE) +
+    coord_polar() +
+    scale_y_continuous(expand = c(0, -10)) +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_size(range = c(1, 5)) +
+    scale_color_gradient(low=sample(pcol, size = 1, replace = FALSE),
+                         high=sample(pcol, size = 1, replace = FALSE))+
+    theme_void()
+  artplot3 <-
+    ggplot(data = data1, aes(
+      x = x1,
+      y = y1,
+      xend = xend1,
+      yend = yend1,
+      size = size1, 
+      colour = color1,
+    )) +
+    geom_segment(show.legend = FALSE) +
+    coord_polar() +
+    scale_y_continuous(expand = c(0, -10)) +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_size(range = c(1, 5)) +
+    scale_color_gradient(low=sample(pcol, size = 1, replace = FALSE),
+                         high=sample(pcol, size = 1, replace = FALSE))+
+    theme_void()
+  if(rnum == 1){
+    (artplot1 | artplot2 | artplot3) /
+      artplot2
+  }
+  if(rnum == 2){
+    artplot1 /
+      (artplot2 | artplot3) /
+      artplot1
+  } else {
+    artplot2 /
+      (artplot1 | artplot2 | artplot3) 
+  }
+}
+  
+make_art(1)
+
+
